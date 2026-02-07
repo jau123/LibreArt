@@ -13,7 +13,12 @@
   "mcpServers": {
     "meigen": {
       "command": "npx",
-      "args": ["-y", "meigen"]
+      "args": ["-y", "meigen"],
+      "env": {
+        "MEIGEN_API_TOKEN": "${MEIGEN_API_TOKEN}",
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "OPENAI_BASE_URL": "${OPENAI_BASE_URL}"
+      }
     }
   }
 }
