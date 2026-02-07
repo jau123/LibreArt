@@ -1,6 +1,6 @@
 /**
- * enhance_prompt Tool - 免费，纯本地
- * 返回 system prompt 让宿主 LLM 执行扩写，不调用任何外部 API
+ * enhance_prompt Tool — free, runs locally
+ * Returns a system prompt for the host LLM to expand the user's prompt; no external API calls
  */
 
 import { z } from 'zod'
@@ -16,15 +16,16 @@ export const enhancePromptSchema = {
 export function registerEnhancePrompt(server: McpServer) {
   server.tool(
     'enhance_prompt',
-    'Transform a simple idea into a professional image generation prompt. Free, no API key needed.',
+    'Transform a simple idea into a professional image generation prompt. Use when the user provides a brief description (e.g., "a cat in a garden") and needs a detailed, high-quality prompt. Combine with gallery inspiration for best results. Free, no API key needed.',
     enhancePromptSchema,
+    { readOnlyHint: true },
     async ({ prompt, style }) => {
       const systemPrompt = getSystemPrompt(style as PromptStyle)
 
       return {
         content: [{
           type: 'text' as const,
-          text: `Please enhance the following prompt using these guidelines:\n\n---\n${systemPrompt}\n---\n\nUser's prompt to enhance:\n"${prompt}"\n\nPlease generate the enhanced prompt now.`,
+          text: `Please enhance the following prompt using these guidelines:\n\n---\n${systemPrompt}\n---\n\nUser's prompt to enhance:\n"${prompt}"\n\nGenerate the enhanced prompt now. Then show it to the user and ask if they'd like to generate an image with it (call generate_image if they confirm).`,
         }],
       }
     }

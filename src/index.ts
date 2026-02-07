@@ -1,6 +1,6 @@
 /**
- * MeiGen MCP Server 入口
- * stdio transport - 用于 Claude Desktop / Claude Code / OpenClaw 集成
+ * MeiGen MCP Server entry point
+ * stdio transport — for Claude Desktop / Claude Code / OpenClaw integration
  */
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'

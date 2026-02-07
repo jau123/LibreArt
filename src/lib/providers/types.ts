@@ -1,6 +1,6 @@
 /**
- * 图片生成 Provider 接口
- * 面向 OpenAI 兼容 API，不同于项目内的 APIYI Provider
+ * Image generation provider interface
+ * For OpenAI-compatible APIs (distinct from the project's APIYI provider)
  */
 
 export interface ImageGenerationRequest {
@@ -10,6 +10,7 @@ export interface ImageGenerationRequest {
   aspectRatio?: string   // "1:1", "16:9" etc.
   quality?: string
   n?: number
+  referenceImages?: string[]  // Public image URLs for style/content guidance
 }
 
 export interface ImageGenerationResult {

@@ -1,25 +1,61 @@
-# LibreArt — Visual Creative Expert
+<p align="center">
+  <img src="assets/banner.jpg" alt="LibreArt Banner" width="600">
+</p>
 
-An AI image generation plugin for [Claude Code](https://claude.com/claude-code) and [OpenClaw](https://openclaw.com). Search inspiration, enhance prompts, and generate images with intelligent workflow orchestration.
+<h1 align="center">
+  LibreArt — Visual Creative Expert
+</h1>
 
-## Features
+<p align="center">
+  <strong>Turn your AI assistant into a creative director for image generation</strong><br>
+  <sub>MCP plugin for Claude Code, OpenClaw, and any MCP-compatible host</sub>
+</p>
 
-- **Inspiration Search** — Browse MeiGen's public gallery of AI-generated images and their prompts
-- **Prompt Enhancement** — Transform simple ideas into professional image generation prompts (free, no API key)
-- **Multi-Provider Image Generation** — Generate images via MeiGen platform or OpenAI-compatible APIs
-- **Reference Image Support** — Use gallery images or previous generations as style/composition reference
-- **Parallel & Chained Workflows** — Generate multiple variations at once, or chain outputs as references for the next step
-- **Creative Expert Skill** — Built-in SKILL.md teaches the LLM to orchestrate tools like a creative director
+<p align="center">
+  <a href="https://www.meigen.ai"><img src="https://img.shields.io/badge/Gallery-meigen.ai-blue?style=flat-square" alt="Gallery"></a>
+  <a href="#tools"><img src="https://img.shields.io/badge/Tools-7-green?style=flat-square" alt="7 Tools"></a>
+  <a href="#providers"><img src="https://img.shields.io/badge/Providers-3-orange?style=flat-square" alt="3 Providers"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square" alt="MIT"></a>
+</p>
 
-## Installation
+<p align="center">
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#what-can-it-do">What Can It Do</a> •
+  <a href="#providers">Providers</a> •
+  <a href="#configuration">Configuration</a>
+</p>
 
-### Claude Code (Plugin)
+<p align="center">
+  <strong>English</strong> | <a href="README.zh-CN.md">中文</a>
+</p>
+
+---
+
+## Why LibreArt?
+
+Most AI image tools are either simple prompt-in-image-out APIs, or complex UIs that require expertise.
+
+LibreArt takes a different approach: it gives your AI assistant **professional creative knowledge** — 1,300+ curated trending prompts, style-specific enhancement techniques, and multi-step workflow orchestration — so you can describe what you want in plain language, and get production-quality results.
+
+**No prompt engineering skills needed.** Just talk to your AI assistant like you would to a creative director.
+
+---
+
+## Quick Start
+
+### Claude Code
 
 ```bash
-claude plugin add meigen
+claude plugin add libreart
 ```
 
-Or install manually by cloning and adding to your project:
+Then run the setup wizard:
+
+```
+/meigen:setup
+```
+
+### Manual Installation
 
 ```bash
 git clone https://github.com/jau123/meigen-mcp-server.git
@@ -27,108 +63,152 @@ cd meigen-mcp-server
 npm install && npm run build
 ```
 
-Then add to your project's `.mcp.json`:
+Add to your `.mcp.json`:
 
 ```json
 {
-  "meigen": {
-    "type": "stdio",
-    "command": "node",
-    "args": ["/path/to/meigen-mcp-server/bin/meigen-mcp.js"],
-    "env": {
-      "MEIGEN_API_TOKEN": "meigen_sk_..."
+  "mcpServers": {
+    "meigen": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["/path/to/meigen-mcp-server/bin/meigen-mcp.js"],
+      "env": {
+        "MEIGEN_API_TOKEN": "meigen_sk_..."
+      }
     }
   }
 }
 ```
 
-### OpenClaw / ClawHub
+> **Tip:** Even without an API key, free features (inspiration search, prompt enhancement, model listing) work immediately.
 
-Install from the skill store, or add the `skills/visual-creative/SKILL.md` to your agent's skills directory.
+---
+
+## What Can It Do
+
+### 1. Explore & Get Inspired
+
+> "Help me think of something for a social media post"
+
+When you're not sure what to create, the assistant browses the curated gallery of 1,300+ trending prompts, shows you visual previews, and lets you pick a style before generating anything.
+
+### 2. Simple Idea to Pro Image
+
+> "A cat sitting in a Japanese garden"
+
+Short descriptions get automatically enhanced into professional prompts with specific visual details — lighting, composition, lens, color palette — then generated. No prompt engineering knowledge needed.
+
+### 3. Batch & Variant Generation
+
+> "Design 4 different logo concepts for a coffee brand"
+
+The assistant writes distinct creative directions for each variant, generates them in parallel (up to 4 at once), and presents the results with comparative commentary.
+
+### 4. Multi-Step Creative Workflow
+
+> "Create a logo, then show me how it looks on a mug and a t-shirt"
+
+The assistant chains generation steps: creates the base image first, then uses it as a reference to generate product mockups — maintaining visual consistency across the series.
+
+### 5. Reference Image Style Transfer
+
+> "Use this local photo as a style reference for my new image"
+
+Local images are automatically compressed and uploaded. The returned URL works as a reference across all three providers — for style transfer, composition guidance, or img2img workflows.
+
+---
+
+<h2 id="tools">Tools</h2>
+
+| Tool | Free | Description |
+|------|------|-------------|
+| `search_gallery` | Yes | Search 1,300+ curated trending prompts with visual previews |
+| `get_inspiration` | Yes | Get full prompt, all images, and metadata for any gallery entry |
+| `enhance_prompt` | Yes | Transform a brief idea into a professional image prompt (runs locally) |
+| `list_models` | Yes | List available models across all configured providers |
+| `upload_reference_image` | Yes | Compress and upload a local image for use as a reference |
+| `comfyui_workflow` | Yes | Manage ComfyUI workflow templates: list, view, import, modify, delete |
+| `generate_image` | Key | Generate an image — routes to the best available provider automatically |
+
+---
+
+<h2 id="providers">Providers</h2>
+
+LibreArt supports three image generation backends. You can configure one or multiple — the assistant auto-selects the best available, or you can specify per-request.
+
+### MeiGen Platform (Recommended)
+
+Cloud API with multiple model options: NanoBanana Pro, Seedream 4.5, Midjourney Niji7, and more. Free daily credits included.
+
+```json
+{ "meigenApiToken": "meigen_sk_..." }
+```
+
+### ComfyUI (Local)
+
+Run generation on your own GPU with full control over models, samplers, and workflow parameters. Import any ComfyUI API-format workflow.
+
+```json
+{
+  "comfyuiUrl": "http://localhost:8188",
+  "comfyuiDefaultWorkflow": "txt2img"
+}
+```
+
+### OpenAI-Compatible API
+
+Bring your own API key for OpenAI (gpt-image-1), Together AI, Fireworks AI, or any OpenAI-compatible service.
+
+```json
+{
+  "openaiApiKey": "sk-...",
+  "openaiBaseUrl": "https://api.openai.com",
+  "openaiModel": "gpt-image-1"
+}
+```
+
+> All three providers support **reference images**. MeiGen and OpenAI accept URLs directly; ComfyUI injects them into LoadImage nodes in your workflow.
+
+---
 
 ## Configuration
 
 ### Interactive Setup (Recommended)
 
-Run the setup wizard after installing the plugin:
-
 ```
 /meigen:setup
 ```
 
-The wizard guides you through choosing a provider and entering your API key. Configuration is saved to `~/.config/meigen/config.json`.
+The wizard walks you through provider selection, API key entry, and ComfyUI workflow import. You can also paste a `curl` command from your API provider's docs — it auto-extracts the key, URL, and model.
 
-### Environment Variables (Advanced)
+### Config File
 
-You can also configure via environment variables. These take priority over the config file.
+Configuration is stored at `~/.config/meigen/config.json`. ComfyUI workflows are stored at `~/.config/meigen/workflows/`.
 
-**MeiGen Platform (Recommended)**
+### Environment Variables
 
-Get an API token from [meigen.ai](https://www.meigen.ai) → Settings → API Keys.
+Environment variables take priority over the config file.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `MEIGEN_API_TOKEN` | Yes | Your MeiGen API token (`meigen_sk_...`) |
-| `MEIGEN_BASE_URL` | No | API base URL (default: `https://www.meigen.ai`) |
+| Variable | Description |
+|----------|-------------|
+| `MEIGEN_API_TOKEN` | MeiGen platform token |
+| `OPENAI_API_KEY` | OpenAI / compatible API key |
+| `OPENAI_BASE_URL` | API base URL (default: `https://api.openai.com`) |
+| `OPENAI_MODEL` | Default model (default: `gpt-image-1`) |
+| `COMFYUI_URL` | ComfyUI server URL (default: `http://localhost:8188`) |
 
-**OpenAI / Compatible API**
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `OPENAI_API_KEY` | Yes | Your OpenAI API key |
-| `OPENAI_BASE_URL` | No | Base URL for OpenAI-compatible APIs (default: `https://api.openai.com`) |
-| `OPENAI_MODEL` | No | Default model (default: `gpt-image-1`) |
-
-## Tools
-
-| Tool | Description | Auth Required |
-|------|-------------|---------------|
-| `enhance_prompt` | Transform a simple idea into a professional image generation prompt | No |
-| `search_gallery` | Search MeiGen's public gallery for AI-generated images and their prompts | No |
-| `list_models` | List available AI image generation models with pricing and capabilities | No |
-| `get_inspiration` | Get full prompt and image URLs for a gallery image | No |
-| `generate_image` | Generate an image using AI (MeiGen or OpenAI-compatible) | Yes |
-
-## Workflow Examples
-
-### Find Inspiration
-
-> "Find me some cyberpunk city references"
-
-The skill will search the gallery, present results, and let you copy full prompts for your own use.
-
-### Simple Idea → Image
-
-> "Generate a beautiful sunset over mountains"
-
-The skill enhances your short description into a detailed prompt, then generates the image.
-
-### Reference Image Generation
-
-> "I like this style, make a city landscape in the same style"
-
-Use any gallery image or previous generation as a style reference for new images.
-
-### Parallel Generation
-
-> "Design 5 different logo concepts for a coffee brand"
-
-The skill writes 5 distinct prompts and generates all 5 images in parallel.
-
-### Brand Package (Serial → Parallel)
-
-> "Create a brand package: first a logo, then apply it to a mug and a t-shirt"
-
-The skill generates the logo first, then uses it as a reference image to generate product mockups in parallel.
+---
 
 ## Development
 
 ```bash
 npm install        # Install dependencies
-npm run build      # Build TypeScript
-npm run dev        # Run with tsx (development)
+npm run build      # Compile TypeScript → dist/
+npm run dev        # Development mode (tsx)
 npm run typecheck  # Type check without emitting
 ```
+
+---
 
 ## License
 

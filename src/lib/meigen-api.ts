@@ -1,6 +1,6 @@
 /**
- * MeiGen API HTTP 客户端
- * 用于模式 B（MeiGen 账户）调用平台 API
+ * MeiGen API HTTP client
+ * Used for MeiGen platform mode — calls the hosted generation API
  */
 
 import type { MeiGenConfig } from '../config.js'
@@ -53,9 +53,7 @@ export class MeiGenApiClient {
     this.apiToken = config.meigenApiToken
   }
 
-  /**
-   * 搜索画廊（无需认证）
-   */
+  /** Search gallery (no auth required) */
   async searchGallery(query: string, limit = 20, offset = 0): Promise<MeiGenSearchResult[]> {
     const params = new URLSearchParams({
       q: query,
@@ -77,9 +75,7 @@ export class MeiGenApiClient {
     return json.data || []
   }
 
-  /**
-   * 获取模型列表（无需认证）
-   */
+  /** List available models (no auth required) */
   async listModels(activeOnly = true): Promise<MeiGenModel[]> {
     const params = new URLSearchParams()
     if (!activeOnly) params.set('active', 'false')
@@ -97,9 +93,7 @@ export class MeiGenApiClient {
     return json.models || []
   }
 
-  /**
-   * 获取图片详情（无需认证）
-   */
+  /** Get image details by ID (no auth required) */
   async getImageDetails(imageId: string): Promise<MeiGenSearchResult | null> {
     const res = await fetch(`${this.baseUrl}/api/images/${encodeURIComponent(imageId)}`)
     if (!res.ok) {
@@ -113,9 +107,7 @@ export class MeiGenApiClient {
     return json.data || null
   }
 
-  /**
-   * 生成图片（需要 API Token）
-   */
+  /** Generate an image (requires API token) */
   async generateImage(params: {
     prompt: string
     modelId?: string
@@ -154,9 +146,7 @@ export class MeiGenApiClient {
     return json
   }
 
-  /**
-   * 查询生成状态（无需认证，通过 generationId 查询）
-   */
+  /** Check generation status by ID (no auth required) */
   async getGenerationStatus(generationId: string): Promise<MeiGenGenerationStatus> {
     const res = await fetch(
       `${this.baseUrl}/api/generate/v2/status/${encodeURIComponent(generationId)}`
@@ -169,18 +159,27 @@ export class MeiGenApiClient {
     return await res.json() as MeiGenGenerationStatus
   }
 
-  /**
-   * 轮询生成状态直到完成或超时
-   */
-  async waitForGeneration(generationId: string, timeoutMs = 300_000): Promise<MeiGenGenerationStatus> {
+  /** Poll generation status until completed or timed out */
+  async waitForGeneration(
+    generationId: string,
+    timeoutMs = 300_000,
+    onProgress?: (elapsedMs: number) => Promise<void>,
+  ): Promise<MeiGenGenerationStatus> {
     const startTime = Date.now()
     const pollInterval = 3_000
+    let lastProgress = 0
 
     while (Date.now() - startTime < timeoutMs) {
       const status = await this.getGenerationStatus(generationId)
 
       if (status.status === 'completed' || status.status === 'failed') {
         return status
+      }
+
+      const elapsed = Date.now() - startTime
+      if (onProgress && elapsed - lastProgress >= 15_000) {
+        await onProgress(elapsed)
+        lastProgress = elapsed
       }
 
       await new Promise(resolve => setTimeout(resolve, pollInterval))

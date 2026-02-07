@@ -26,11 +26,13 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
+    "sharp": "^0.34.5",
     "zod": "^3.25.0"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/sharp": "^0.31.1",
     "tsx": "^4.0.0",
-    "@types/node": "^20.0.0"
+    "typescript": "^5.0.0"
   }
 }

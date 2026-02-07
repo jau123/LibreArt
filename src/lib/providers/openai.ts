@@ -1,6 +1,6 @@
 /**
- * OpenAI 兼容 Provider
- * 支持 gpt-image-1、DALL-E 3，以及任何 OpenAI 兼容服务（Together AI、DeepInfra 等）
+ * OpenAI-compatible Provider
+ * Supports gpt-image-1, DALL-E 3, and any OpenAI-compatible service (Together AI, DeepInfra, etc.)
  */
 
 import type { ImageProvider, ImageGenerationRequest, ImageGenerationResult } from './types.js'
@@ -35,14 +35,20 @@ export class OpenAIProvider implements ImageProvider {
       size: request.size || '1024x1024',
     }
 
-    // gpt-image 系列强制返回 base64，不需要 response_format
-    // DALL-E 系列需要指定 response_format
+    // gpt-image series returns base64 by default, no need for response_format
+    // DALL-E series requires explicit response_format
     if (model.startsWith('dall-e')) {
       body.response_format = 'b64_json'
     }
 
     if (request.quality) {
       body.quality = request.quality
+    }
+
+    // gpt-image-1 supports reference images via the image parameter
+    // DALL-E series does not support image input in the generations endpoint
+    if (request.referenceImages?.length && !model.startsWith('dall-e')) {
+      body.image = request.referenceImages
     }
 
     const res = await fetch(`${this.baseUrl}/v1/images/generations`, {
@@ -73,7 +79,7 @@ export class OpenAIProvider implements ImageProvider {
       }
     }
 
-    // 如果返回的是 URL，下载并转为 base64
+    // If response contains a URL, download and convert to base64
     if (imageData.url) {
       const imageRes = await fetch(imageData.url)
       const buffer = await imageRes.arrayBuffer()

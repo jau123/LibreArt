@@ -1,11 +1,11 @@
 /**
- * MeiGen 提示词扩写 System Prompts
- * 来源：edgeone/vision-api/node-functions/api/[[default]].js
+ * Prompt enhancement system prompts
+ * Source: edgeone/vision-api/node-functions/api/[[default]].js
  */
 
 /**
- * 写实/通用风格扩写 prompt
- * 适用于 Gemini、Seedream 等写实模型
+ * Realistic/general style enhancement prompt
+ * For Gemini, Seedream, and other photorealistic models
  */
 export const REALISTIC_SYSTEM_PROMPT = `# Role
 You are a Senior Visual Logic Analyst specializing in reverse-engineering imagery for next-generation, high-reasoning AI models (like Gemini 3 Pro Image).
@@ -55,8 +55,8 @@ To maximize clarity for a reasoning model, output the prompt in two parts: a den
 3. Start directly with the Narrative Specification paragraph.`
 
 /**
- * 动漫/二次元风格扩写 prompt
- * 适用于 Niji 7 等动漫模型
+ * Anime/2D style enhancement prompt
+ * For Niji 7 and other anime models
  */
 export const ANIME_SYSTEM_PROMPT = `# Role
 You are a Lead Concept Artist & Niji 7 Prompt Director.
@@ -85,7 +85,7 @@ To ensure the anime look, you MUST inject these style words into the prompt base
 [Rich Narrative Description focusing on Subject, Action, and Micro-Details] + [Atmospheric Environment & Lighting Description] + [Art Style Keywords] --no 3d, cgi, realistic, photorealistic, photography, photo, realism, live action, sketch, draft`
 
 /**
- * 插画/概念艺术风格扩写 prompt
+ * Illustration/concept art style enhancement prompt
  */
 export const ILLUSTRATION_SYSTEM_PROMPT = `# Role
 You are a Senior Illustration Prompt Engineer specializing in concept art and digital illustration.

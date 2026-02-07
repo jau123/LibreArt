@@ -1,32 +1,42 @@
 /**
- * MeiGen MCP Server 配置管理
- * 优先级：环境变量 > ~/.config/meigen/config.json > 默认值
+ * MeiGen MCP Server configuration
+ * Priority: environment variables > ~/.config/meigen/config.json > defaults
  */
 
-import { readFileSync } from 'fs'
+import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { homedir } from 'os'
 
 export interface MeiGenConfig {
-  // MeiGen 平台模式
+  // MeiGen platform mode
   meigenApiToken?: string
 
-  // OpenAI 兼容模式（自带 Key）
+  // OpenAI-compatible mode (user's own key)
   openaiApiKey?: string
   openaiBaseUrl: string
   openaiModel: string
 
-  // MeiGen API 基础地址
+  // MeiGen API base URL
   meigenBaseUrl: string
+
+  // Upload gateway (for reference image upload to R2)
+  uploadGatewayUrl: string
+
+  // ComfyUI local mode
+  comfyuiUrl?: string
+  comfyuiDefaultWorkflow?: string
 }
 
-export type ProviderType = 'openai' | 'meigen'
+export type ProviderType = 'openai' | 'meigen' | 'comfyui'
 
 interface ConfigFile {
   meigenApiToken?: string
   openaiApiKey?: string
   openaiBaseUrl?: string
   openaiModel?: string
+  uploadGatewayUrl?: string
+  comfyuiUrl?: string
+  comfyuiDefaultWorkflow?: string
 }
 
 function loadConfigFile(): ConfigFile {
@@ -36,6 +46,17 @@ function loadConfigFile(): ConfigFile {
     return JSON.parse(content) as ConfigFile
   } catch {
     return {}
+  }
+}
+
+/** Check if ~/.config/meigen/workflows/ contains any .json files */
+function hasComfyuiWorkflows(): boolean {
+  try {
+    const dir = join(homedir(), '.config', 'meigen', 'workflows')
+    const files = readdirSync(dir)
+    return files.some(f => f.endsWith('.json'))
+  } catch {
+    return false
   }
 }
 
@@ -49,24 +70,30 @@ export function loadConfig(): MeiGenConfig {
     openaiModel: process.env.OPENAI_MODEL || file.openaiModel || 'gpt-image-1',
 
     meigenBaseUrl: process.env.MEIGEN_BASE_URL || 'https://www.meigen.ai',
+
+    uploadGatewayUrl: process.env.UPLOAD_GATEWAY_URL || file.uploadGatewayUrl || 'https://gen.meigen.art/api',
+
+    comfyuiUrl: process.env.COMFYUI_URL || file.comfyuiUrl,
+    comfyuiDefaultWorkflow: file.comfyuiDefaultWorkflow,
   }
 }
 
 /**
- * 检测可用的 Provider
+ * Detect available providers.
+ * Priority: meigen > comfyui > openai
  */
 export function getAvailableProviders(config: MeiGenConfig): ProviderType[] {
   const providers: ProviderType[] = []
   if (config.meigenApiToken) providers.push('meigen')
+  if (hasComfyuiWorkflows()) providers.push('comfyui')
   if (config.openaiApiKey) providers.push('openai')
   return providers
 }
 
-/**
- * 获取默认 Provider（按优先级）
- */
+/** Get default provider (by priority) */
 export function getDefaultProvider(config: MeiGenConfig): ProviderType | null {
   if (config.meigenApiToken) return 'meigen'
+  if (hasComfyuiWorkflows()) return 'comfyui'
   if (config.openaiApiKey) return 'openai'
   return null
 }

@@ -19,7 +19,13 @@ First, check if a config file already exists:
 cat ~/.config/meigen/config.json 2>/dev/null
 ```
 
-If config exists, show the current configuration (mask API keys: show first 10 chars + "...") and ask if they want to reconfigure.
+Also check for existing ComfyUI workflows:
+
+```bash
+ls ~/.config/meigen/workflows/*.json 2>/dev/null
+```
+
+If config exists, show the current configuration (mask API keys: show first 10 chars + "...") and any saved workflows. Ask if they want to reconfigure.
 
 If no config exists, present this introduction:
 
@@ -30,7 +36,7 @@ If no config exists, present this introduction:
 > - Enhance simple ideas into professional prompts
 > - Browse available AI models
 >
-> Configuring an API key unlocks **image generation**.
+> Configuring a provider unlocks **image generation**.
 
 Then proceed to Step 2.
 
@@ -45,18 +51,25 @@ Present these options to the user:
 - Reference image support for style transfer
 - No additional accounts needed — just get a token from meigen.ai
 
-### Option B: Custom OpenAI-Compatible API
+### Option B: ComfyUI (Local)
+
+- Use your **local ComfyUI** installation for image generation
+- Full control over models, samplers, and workflow settings
+- No cloud API needed — runs entirely on your machine
+- Import your own workflow from ComfyUI
+
+### Option C: Custom OpenAI-Compatible API
 
 - Use your own **OpenAI**, **Together AI**, **Fireworks AI**, or any OpenAI-compatible service
 - Bring your own API key and billing
 - Supports any model that uses the OpenAI `/v1/images/generations` endpoint
 
-### Option C: Import from curl Example
+### Option D: Import from curl Example
 
 - Already have a working curl command from your API provider's docs? Paste it directly!
 - We'll automatically extract the API key, base URL, and model name
 
-### Option D: Skip image generation for now
+### Option E: Skip image generation for now
 
 - Free features still available (inspiration search, prompt enhancement, model listing)
 - You can run `/meigen:setup` anytime later to enable image generation
@@ -98,7 +111,66 @@ If valid, proceed to **Step 4** with this config:
 }
 ```
 
-## Step 3B: Custom OpenAI-Compatible API Setup
+## Step 3B: ComfyUI (Local) Setup
+
+### 3B-1: Check Connection
+
+Ask the user for their ComfyUI server URL:
+
+> What is your ComfyUI server URL? (default: `http://localhost:8188`)
+
+Test the connection:
+
+```bash
+curl -s <URL>/system_stats | head -c 200
+```
+
+- **Success**: Show confirmation and continue to 3B-2
+- **Failure**: Tell the user:
+  > Cannot connect to ComfyUI at `<URL>`. Please make sure:
+  > 1. ComfyUI is running (start it with `python main.py` or your launcher)
+  > 2. The URL and port are correct
+  > 3. No firewall is blocking the connection
+
+### 3B-2: Import Workflow
+
+Explain the workflow export process to the user:
+
+> To use ComfyUI with this plugin, you need to export a workflow in **API format**:
+>
+> 1. Open ComfyUI in your browser (usually `http://localhost:8188`)
+> 2. Load or create your preferred workflow
+> 3. Click **⚙️ Settings** → enable **"Enable Dev mode options"**
+> 4. Click the **"Save (API Format)"** button that appears
+> 5. Save the downloaded `.json` file somewhere convenient
+
+Then ask them to provide the file path:
+
+> Please provide the path to your exported workflow JSON file:
+> Example: `~/Downloads/workflow_api.json`
+
+Use the `comfyui_workflow` tool with action `import` to import the workflow:
+
+- Ask for a short name for the workflow (e.g., "txt2img", "anime", "realistic")
+- Call: `comfyui_workflow import` with `filePath` and `name`
+- Show the detected nodes and parameters to the user for confirmation
+
+If the import succeeds, ask if they want to import additional workflows. If yes, repeat this step.
+
+### 3B-3: Save Configuration
+
+Build the config JSON:
+
+```json
+{
+  "comfyuiUrl": "<the URL, omit if http://localhost:8188>",
+  "comfyuiDefaultWorkflow": "<the first imported workflow name>"
+}
+```
+
+Proceed to **Step 4** to save. The workflow files are already saved by the import step.
+
+## Step 3C: Custom OpenAI-Compatible API Setup
 
 Collect the following information. Present common presets first for convenience:
 
@@ -140,7 +212,7 @@ Proceed to **Step 4** with config from the collected fields (see bottom of this 
 
 Only include fields that differ from defaults. Omit `openaiBaseUrl` if it's `https://api.openai.com`, omit `openaiModel` if it's `gpt-image-1`.
 
-## Step 3C: Import from curl Example
+## Step 3D: Import from curl Example
 
 Ask the user to paste their curl command. Common formats they might paste:
 
@@ -197,6 +269,14 @@ Build the config JSON based on the chosen provider:
 }
 ```
 
+**For ComfyUI:**
+```json
+{
+  "comfyuiUrl": "<url, omit if default>",
+  "comfyuiDefaultWorkflow": "<workflow name>"
+}
+```
+
 **For OpenAI-compatible (manual or curl import):**
 ```json
 {
@@ -214,6 +294,8 @@ mkdir -p ~/.config/meigen
 
 Then use the Write tool to write the JSON config to `~/.config/meigen/config.json`.
 
+**Important**: If the user already has a config file with other providers configured, **merge** the new config into the existing one rather than overwriting. For example, a user might have both MeiGen and ComfyUI configured.
+
 After writing, set permissions:
 
 ```bash
@@ -228,7 +310,15 @@ Tell the user:
 >
 > After restarting, you can:
 > - Use `generate_image` to create AI images
-> - Run `list_models` to see available models
+> - Run `list_models` to see available models and workflows
 > - Try: "Generate a beautiful sunset over mountains"
 >
 > You can run `/meigen:setup` again anytime to change your configuration.
+
+**For ComfyUI users**, additionally mention:
+
+> ComfyUI tips:
+> - Use `comfyui_workflow list` to see your saved workflows
+> - Use `comfyui_workflow view` to see adjustable parameters (steps, CFG, sampler, etc.)
+> - Ask me to change any workflow parameter — e.g., "increase steps to 30" or "switch sampler to dpmpp_2m"
+> - You can import more workflows anytime with `comfyui_workflow import`
