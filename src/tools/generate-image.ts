@@ -176,23 +176,14 @@ async function generateWithOpenAI(
   const result = await provider.generate({ prompt, model, size, quality, referenceImages })
 
   const savedPath = saveImageLocally(result.imageBase64, result.mimeType)
-  const refNote = referenceImages?.length
-    ? `\nUsed ${referenceImages.length} reference image(s) for guidance.`
-    : ''
-  const pathNote = savedPath ? `\nSaved to: ${savedPath}` : ''
+
+  const lines = [`Image generated successfully.`]
+  lines.push(`- Provider: OpenAI (${model || config.openaiModel})`)
+  if (referenceImages?.length) lines.push(`- Reference images: ${referenceImages.length} used`)
+  if (savedPath) lines.push(`- Saved to: ${savedPath}`)
 
   return {
-    content: [
-      {
-        type: 'image' as const,
-        data: result.imageBase64,
-        mimeType: result.mimeType,
-      },
-      {
-        type: 'text' as const,
-        text: `Image generated via OpenAI (${model || config.openaiModel}).${refNote}${pathNote}`,
-      },
-    ],
+    content: [{ type: 'text' as const, text: lines.join('\n') }],
   }
 }
 
@@ -236,7 +227,7 @@ async function generateWithMeiGen(
     throw new Error('No image URL in completed generation')
   }
 
-  // Download image and convert to base64 for inline display
+  // Download image for local save
   const imageRes = await fetch(status.imageUrl)
   if (!imageRes.ok) {
     throw new Error(`Failed to download generated image: ${imageRes.status}`)
@@ -246,20 +237,15 @@ async function generateWithMeiGen(
   const mimeType = imageRes.headers.get('content-type') || 'image/jpeg'
 
   const savedPath = saveImageLocally(base64, mimeType)
-  const pathNote = savedPath ? `\nSaved to: ${savedPath}` : ''
+
+  const lines = [`Image generated successfully.`]
+  lines.push(`- Provider: MeiGen (model: ${model || 'default'})`)
+  lines.push(`- Image URL: ${status.imageUrl}`)
+  if (savedPath) lines.push(`- Saved to: ${savedPath}`)
+  lines.push(`\nYou can use the Image URL as referenceImages for follow-up generation.`)
 
   return {
-    content: [
-      {
-        type: 'image' as const,
-        data: base64,
-        mimeType,
-      },
-      {
-        type: 'text' as const,
-        text: `Image generated via MeiGen (model: ${model || 'default'}).${pathNote}\nImage URL: ${status.imageUrl}\n\nYou can use this URL as referenceImages in follow-up generate_image() calls for variations or style transfer.`,
-      },
-    ],
+    content: [{ type: 'text' as const, text: lines.join('\n') }],
   }
 }
 
@@ -300,20 +286,14 @@ async function generateWithComfyUI(
   )
 
   const savedPath = saveImageLocally(result.imageBase64, result.mimeType)
-  const pathNote = savedPath ? `\nSaved to: ${savedPath}` : ''
+
+  const lines = [`Image generated successfully.`]
+  lines.push(`- Provider: ComfyUI (workflow: ${workflowName})`)
+  if (savedPath) lines.push(`- Saved to: ${savedPath}`)
+  if (result.referenceImageWarning) lines.push(`\nWarning: ${result.referenceImageWarning}`)
 
   return {
-    content: [
-      {
-        type: 'image' as const,
-        data: result.imageBase64,
-        mimeType: result.mimeType,
-      },
-      {
-        type: 'text' as const,
-        text: `Image generated via ComfyUI (workflow: ${workflowName}).${pathNote}${result.referenceImageWarning ? `\n\nWarning: ${result.referenceImageWarning}` : ''}`,
-      },
-    ],
+    content: [{ type: 'text' as const, text: lines.join('\n') }],
   }
 }
 
