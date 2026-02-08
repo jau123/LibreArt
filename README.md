@@ -50,7 +50,7 @@ MeiGen-Art is an open-source **MCP Server** (plugin) that bridges your AI assist
 ## See It in Action
 
 <p align="center">
-  <video src="https://qiaowenlong-1317904822.cos.accelerate.myqcloud.com/github/git.mp4" controls width="600">
+  <video src="https://github.com/user-attachments/assets/20437f76-f8c8-45f8-a028-c906a568876b" controls width="600">
     Your browser does not support the video tag. <a href="https://youtu.be/JQ3DZ1DXqvs">Watch on YouTube</a>.
   </video>
 </p>
