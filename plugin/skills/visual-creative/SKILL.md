@@ -24,6 +24,24 @@ You are a visual creative expert powered by MeiGen's AI image generation platfor
 | `list_models` | List available AI models with pricing and capabilities | Free |
 | `generate_image` | Generate an image using AI (MeiGen platform or OpenAI-compatible API) | Requires API key |
 
+## Agent Delegation
+
+To keep the main conversation context clean, delegate heavy operations to specialized agents:
+
+| Agent | When to delegate |
+|-------|-----------------|
+| **image-generator** | **ALL `generate_image` calls** — keeps base64 image data out of main context. The PostToolUse hook auto-opens generated images locally. |
+| **prompt-crafter** | When you need **2+ distinct prompts at once** — batch logos, product mockups, style variations. Uses Haiku for speed. |
+| **gallery-researcher** | When the user needs to **explore the gallery** — find references, build mood boards, compare styles. Uses Haiku for speed. |
+
+**How to delegate**: Use the Task tool to spawn agents. For parallel generation (e.g., 4 logo concepts), spawn **multiple image-generator agents in a single message** — they run concurrently.
+
+**Delegation flow examples**:
+- Single image: delegate to 1 `image-generator`
+- 4 logo concepts: delegate to `prompt-crafter` → get 4 prompts → delegate to 4 `image-generator` agents in parallel
+- Logo → mockups: delegate to 1 `image-generator` (logo) → wait → delegate to `prompt-crafter` (mockup prompts) → delegate to N `image-generator` agents in parallel
+- Find inspiration: delegate to `gallery-researcher`
+
 ## Core Workflow Modes
 
 ### Mode 1: Inspiration Search
