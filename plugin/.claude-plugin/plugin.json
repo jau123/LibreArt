@@ -5,6 +5,5 @@
   "author": {
     "name": "MeiGen",
     "url": "https://www.meigen.ai"
-  },
-  "mcpServers": ".mcp.json"
+  }
 }
