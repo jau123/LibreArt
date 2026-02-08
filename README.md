@@ -301,6 +301,20 @@ Environment variables take priority over the config file.
 
 ---
 
+## Privacy
+
+MeiGen-Art respects your privacy. Here's what happens with your data:
+
+- **ComfyUI (local)** — All processing stays on your machine. No data is sent externally.
+- **MeiGen Cloud** — Prompts and reference images are sent to `api.meigen.ai` for generation. Generated images are stored temporarily on Cloudflare R2. See [meigen.ai/privacy](https://www.meigen.ai/privacy).
+- **OpenAI-compatible** — Prompts and reference images are sent to the configured API endpoint. See your provider's privacy policy.
+- **Reference image upload** — Images are compressed locally (max 2MB) and uploaded to Cloudflare R2 via `gen.meigen.ai`. No authentication required.
+- **Gallery search & prompt enhancement** — Run locally against bundled data. No external API calls.
+
+No telemetry, analytics, or tracking of any kind.
+
+---
+
 ## License
 
 [MIT](LICENSE) — free for personal and commercial use.

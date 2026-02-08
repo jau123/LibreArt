@@ -20,7 +20,7 @@ export function registerUploadReferenceImage(server: McpServer, config: MeiGenCo
     'upload_reference_image',
     'Upload a local image for use as a reference in generate_image. Compresses large images (max 2MB, max 2048px) and returns a public URL. Call this when the user wants to use a local file as a reference image.',
     uploadReferenceImageSchema,
-    { readOnlyHint: false },
+    { readOnlyHint: false, destructiveHint: true },
     async ({ filePath }) => {
       // Validate file exists
       if (!existsSync(filePath)) {

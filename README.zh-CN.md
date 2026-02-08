@@ -301,6 +301,20 @@ MeiGen-Art 支持三种图片生成后端，可以配置一个或多个 — 系�
 
 ---
 
+## 隐私
+
+MeiGen-Art 尊重你的隐私。以下是数据处理方式：
+
+- **ComfyUI（本地）** — 所有处理在本机完成，不发送任何数据到外部。
+- **MeiGen 云端** — 提示词和参考图会发送到 `api.meigen.ai` 进行生成。生成的图片临时存储在 Cloudflare R2。详见 [meigen.ai/privacy](https://www.meigen.ai/privacy)。
+- **OpenAI 兼容 API** — 提示词和参考图会发送到你配置的 API 端点。请参考你的服务商隐私政策。
+- **参考图上传** — 图片在本地压缩（最大 2MB）后上传到 Cloudflare R2（通过 `gen.meigen.ai`），无需认证。
+- **灵感搜索和提示词增强** — 在本地使用内置数据运行，不调用外部 API。
+
+不包含任何遥测、分析或追踪功能。
+
+---
+
 ## 许可证
 
 [MIT](LICENSE) — 个人和商业用途均免费。

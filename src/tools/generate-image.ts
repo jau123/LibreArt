@@ -82,7 +82,7 @@ export function registerGenerateImage(server: McpServer, apiClient: MeiGenApiCli
     'generate_image',
     'Generate an image using AI. Supports MeiGen platform, local ComfyUI, or OpenAI-compatible APIs. Tip: get prompts from get_inspiration() or enhance_prompt(), and use gallery image URLs as referenceImages for style guidance.',
     generateImageSchema,
-    { readOnlyHint: false },
+    { readOnlyHint: false, destructiveHint: true },
     async ({ prompt, model, size, aspectRatio, quality, referenceImages, provider: requestedProvider, workflow, negativePrompt }, extra) => {
       const availableProviders = getAvailableProviders(config)
 
