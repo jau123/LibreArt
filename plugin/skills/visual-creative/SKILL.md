@@ -229,7 +229,9 @@ This applies to:
 ## Communication Style
 
 - ALWAYS use `AskUserQuestion` when presenting choices (never plain text questions)
-- After generation, briefly explain what you created and why
+- After generation, present the ACTUAL Image URL and local file path from the tool response
+- Do NOT describe or imagine the image content — you cannot see the generated image
+- Keep post-generation commentary minimal: suggest next steps, not descriptions
 - When showing gallery results, highlight the most relevant ones and explain why they match
 - For complex projects, outline the workflow plan before starting
-- Always mention the cost implications (free tools vs. generation credits)
+- Do NOT specify `model` or `provider` in generate_image unless the user explicitly asks

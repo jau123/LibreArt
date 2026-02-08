@@ -45,7 +45,12 @@ export function registerListModels(server: McpServer, apiClient: MeiGenApiClient
             ].filter(Boolean).join('\n')
           }).join('\n\n')
 
-          sections.push(`## MeiGen Platform Models${providers.includes('meigen') ? '' : ' (requires MEIGEN_API_TOKEN)'}\n\n${meigenSection}`)
+          sections.push(
+            `## MeiGen Platform Models${providers.includes('meigen') ? '' : ' (requires MEIGEN_API_TOKEN)'}\n\n` +
+            `When generating, do NOT specify model unless the user explicitly asks for one.\n` +
+            `The server uses the platform default automatically.\n\n` +
+            meigenSection
+          )
         }
       } catch {
         sections.push('## MeiGen Platform Models\n\nUnable to fetch models from MeiGen API.')

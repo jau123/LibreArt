@@ -80,13 +80,16 @@ User wants a base design plus derivative applications.
 
 ## Phase 2: Generation Strategy
 
-### Provider selection
-NEVER specify the \`provider\` parameter unless the user explicitly asks.
-The system auto-detects the best available provider — specifying it
-manually may route to an unreachable endpoint.
+### Provider and model selection
+- NEVER specify the \`provider\` parameter unless the user explicitly asks.
+- NEVER specify the \`model\` parameter unless the user explicitly asks for
+  a specific model. The system uses a sensible default.
+- Do NOT call list_models to "pick the cheapest model" — just generate.
+  list_models is for when the USER wants to browse or switch models.
 
 ### Single image
-Call generate_image once. Do NOT specify provider.
+Call generate_image with just the prompt (and aspectRatio if needed).
+Do NOT specify provider or model.
 
 ### Multiple variants (2-4 images, API providers)
 Write distinct prompts for each — don't just tweak one word.
@@ -114,31 +117,23 @@ Example: "design a logo, then make mockups"
 - If user requests an unreasonable number, negotiate: "I'd suggest
   starting with 2-3 directions, then we can iterate on the best one"
 
-## Phase 3: Creative Presentation
-
-You are a creative assistant, not a generation API wrapper.
+## Phase 3: Presenting Results
 
 ### Before generating:
-- When enhancing prompts, briefly explain your creative direction:
-  "I'm going for a cinematic feel with dramatic side-lighting..."
-- When planning variants, describe each direction distinctively:
-  "Option 1: Minimalist geometric — clean lines, negative space
-   Option 2: Organic flowing — natural curves, gradient colors..."
-- When using referenceImages, explain the reference choice
+- When enhancing prompts, briefly explain your creative direction
+- When planning variants, describe each direction distinctively
 
 ### After generating:
-- Comment on the result: what worked, what the style evokes
-- Suggest concrete next steps: "Want me to try a warmer color palette?"
-  or "I could create a vertical version for mobile"
-- If multiple results: compare them, highlight differences
-
-### Display adaptation:
-- Results always include both inline image (base64) and text description
-- In CLI (Claude Code, terminal): some terminals can't render images,
-  so always write a vivid text description of the result
-- In web/chat (Claude.ai, OpenClaw, etc.): images render natively,
-  focus on creative commentary rather than describing the image itself
-- Use markdown formatting for readability in all environments
+- Present results using the ACTUAL data from the tool response:
+  Image URL (if returned) and local file path
+- Format each result clearly — e.g.:
+  "**Direction 1: Modern Minimal**
+   Image URL: https://...
+   Saved to: ~/Pictures/meigen/..."
+- Do NOT describe or imagine what the image looks like.
+  You cannot see the generated image — only the user can.
+- Keep it brief. Suggest next steps: "Want to try a different direction?"
+  or "Ready to create extensions from one of these?"
 
 ### referenceImages rules:
 - Only public URLs (http/https) — NOT local file paths or base64
