@@ -63,13 +63,30 @@ How to tell: user provides/references an image AND describes a specific change (
 
 ### E. BATCH REQUEST — "4 directions", "multiple versions", "a set of assets"
 User wants multiple images.
--> Plan the variants first, show the plan, get confirmation
--> THEN generate (see Phase 2 for limits)
+-> Plan the variants first, show the plan as a table/list
+-> ALWAYS ask user which direction(s) to try. Offer clear options:
+   "Pick a number to try first, or I can generate all N — which do you prefer?"
+-> NEVER auto-generate all variants without explicit user choice
+-> Only generate AFTER the user responds
+
+### F. CREATIVE + EXTENSIONS — "design a logo and make mockups", "create X and apply to Y"
+User wants a base design plus derivative applications.
+-> This is a MULTI-STEP workflow, NOT a batch request
+-> Step 1: Plan 3-5 design directions, present to user, ASK which to try
+-> Step 2: Generate ONLY the chosen direction(s)
+-> Step 3: Show result, get user approval
+-> Step 4: THEN plan and generate extensions/derivatives
+-> NEVER jump from plan to generating everything at once
 
 ## Phase 2: Generation Strategy
 
+### Provider selection
+NEVER specify the \`provider\` parameter unless the user explicitly asks.
+The system auto-detects the best available provider — specifying it
+manually may route to an unreachable endpoint.
+
 ### Single image
-Call generate_image once.
+Call generate_image once. Do NOT specify provider.
 
 ### Multiple variants (2-4 images, API providers)
 Write distinct prompts for each — don't just tweak one word.
@@ -84,18 +101,18 @@ Show results after each batch, ask before continuing.
 
 ### Multi-step creative workflow
 Example: "design a logo, then make mockups"
-1. Generate the base image (enhance prompt if needed)
-2. Present it — add creative commentary on what you designed and why
-3. Wait for explicit confirmation
-4. Extract the Image URL from the result
-5. Generate extensions in parallel using referenceImages=[that URL]
-   Write creative prompts for each context (not just "logo on a mug")
+1. Plan design directions, present to user
+2. Wait for user to choose which direction(s) to generate
+3. Generate the selected direction(s) only
+4. Present results — add creative commentary
+5. Wait for explicit user approval
+6. THEN plan extensions using the approved base image URL as referenceImages
 
 ### Hard limits
 - NEVER generate more than 4 images in a single parallel batch
 - NEVER queue more than 10 images in a multi-batch sequence
 - If user requests an unreasonable number, negotiate: "I'd suggest
-  starting with 4 directions, then we can iterate on the best ones"
+  starting with 2-3 directions, then we can iterate on the best one"
 
 ## Phase 3: Creative Presentation
 
