@@ -1,5 +1,5 @@
 <h1 align="center">
-  MeiGen-AI-Design-MCP
+  MeiGen AI Design MCP
 </h1>
 
 <p align="center">
