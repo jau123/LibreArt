@@ -31,7 +31,7 @@
 
 ## What Is This?
 
-MeiGen-Art is an open-source **MCP Server** (plugin) that bridges your AI assistant and professional image generation tools. Think of it as installing a "graphics card driver" for Claude Code or OpenClaw — once added, your AI can search visual references, enhance prompts, and generate images directly in the terminal.
+MeiGen MCP is an open-source **MCP Server** (plugin) that bridges your AI assistant and professional image generation tools. Think of it as installing a "graphics card driver" for Claude Code or OpenClaw — once added, your AI can search visual references, enhance prompts, and generate images directly in the terminal.
 
 **No API key required for free features** — inspiration search, prompt enhancement, and model browsing work out of the box.
 
@@ -91,7 +91,7 @@ MeiGen-Art is an open-source **MCP Server** (plugin) that bridges your AI assist
 
 ```bash
 # Add the plugin marketplace
-/plugin marketplace add jau123/MeiGen-Art
+/plugin marketplace add jau123/MeiGen-AI-Design-MCP
 
 # Install
 /plugin install meigen@meigen-marketplace
@@ -192,7 +192,7 @@ Switch creative modes with `/output-style`:
 
 <h2 id="providers">Providers</h2>
 
-MeiGen-Art supports three image generation backends. Configure one or multiple — the system auto-selects the best available.
+MeiGen MCP supports three image generation backends. Configure one or multiple — the system auto-selects the best available.
 
 ### ComfyUI — Local & Free
 
@@ -266,7 +266,7 @@ Environment variables take priority over the config file.
 
 ## Privacy
 
-MeiGen-Art respects your privacy. Here's what happens with your data:
+MeiGen MCP respects your privacy. Here's what happens with your data:
 
 - **ComfyUI (local)** — All processing stays on your machine. No data is sent externally.
 - **MeiGen Cloud** — Prompts and reference images are sent to `api.meigen.ai` for generation. Generated images are stored temporarily on Cloudflare R2. See [meigen.ai/privacy](https://www.meigen.ai/privacy).

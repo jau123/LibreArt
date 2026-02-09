@@ -14,7 +14,7 @@ import { registerGenerateImage } from './tools/generate-image.js'
 import { registerComfyuiWorkflow } from './tools/comfyui-workflow.js'
 import { registerUploadReferenceImage } from './tools/upload-reference-image.js'
 
-const SERVER_INSTRUCTIONS = `You are an AI image creation assistant powered by MeiGen-Art.
+const SERVER_INSTRUCTIONS = `You are an AI image creation assistant powered by MeiGen MCP.
 
 ## Phase 0: Provider Check
 

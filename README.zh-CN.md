@@ -31,7 +31,7 @@
 
 ## 这是什么？
 
-MeiGen-Art 是一个开源的 **MCP Server**（插件），连接你的 AI 助手和专业图片生成工具。可以理解为给 Claude Code 或 OpenClaw 装了一个「显卡驱动」— 装上后，你的 AI 就能搜索视觉参考、增强提示词、直接在终端里生成图片。
+MeiGen MCP 是一个开源的 **MCP Server**（插件），连接你的 AI 助手和专业图片生成工具。可以理解为给 Claude Code 或 OpenClaw 装了一个「显卡驱动」— 装上后，你的 AI 就能搜索视觉参考、增强提示词、直接在终端里生成图片。
 
 **免费功能无需 API Key** — 灵感搜索、提示词增强、模型浏览，装完即用。
 
@@ -91,7 +91,7 @@ MeiGen-Art 是一个开源的 **MCP Server**（插件），连接你的 AI 助�
 
 ```bash
 # 添加插件源
-/plugin marketplace add jau123/MeiGen-Art
+/plugin marketplace add jau123/MeiGen-AI-Design-MCP
 
 # 安装
 /plugin install meigen@meigen-marketplace
@@ -192,7 +192,7 @@ MeiGen 使用专用子 Agent 实现高效并行执行：
 
 <h2 id="生成后端">生成后端</h2>
 
-MeiGen-Art 支持三种图片生成后端，可以配置一个或多个 — 系统自动选择最佳可用后端。
+MeiGen MCP 支持三种图片生成后端，可以配置一个或多个 — 系统自动选择最佳可用后端。
 
 ### ComfyUI — 本地免费
 
@@ -266,7 +266,7 @@ MeiGen-Art 支持三种图片生成后端，可以配置一个或多个 — 系�
 
 ## 隐私
 
-MeiGen-Art 尊重你的隐私。以下是数据处理方式：
+MeiGen MCP 尊重你的隐私。以下是数据处理方式：
 
 - **ComfyUI（本地）** — 所有处理在本机完成，不发送任何数据到外部。
 - **MeiGen 云端** — 提示词和参考图会发送到 `api.meigen.ai` 进行生成。生成的图片临时存储在 Cloudflare R2。详见 [meigen.ai/privacy](https://www.meigen.ai/privacy)。

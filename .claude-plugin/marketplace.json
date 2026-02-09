@@ -8,13 +8,13 @@
     {
       "name": "meigen",
       "source": "./plugin",
-      "description": "MeiGen-Art: AI-powered visual creative expert — search inspiration, enhance prompts, and generate images",
+      "description": "MeiGen MCP: AI-powered visual creative expert — search inspiration, enhance prompts, and generate images",
       "version": "1.1.11",
       "author": {
         "name": "MeiGen"
       },
       "homepage": "https://www.meigen.ai",
-      "repository": "https://github.com/jau123/MeiGen-Art"
+      "repository": "https://github.com/jau123/MeiGen-AI-Design-MCP"
     }
   ]
 }
