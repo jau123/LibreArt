@@ -58,68 +58,30 @@ MeiGen-Art 是一个开源的 **MCP Server**（插件），连接你的 AI 助�
   <sub>▶ 在 YouTube 观看演示</sub>
 </p>
 
-### Logo 设计 — 多方案 + 迭代
+### 产品图 — 4 个方向并行生成
 
-```
-你:   帮我设计一个咖啡品牌 "Dawn Brew" 的 logo
+> *"帮这瓶香水做 4 张产品展示图，其中一张要有模特。"*
 
-AI:   这里有 4 个创意方向：
-      ┌──────────────────────────────────────────────────┐
-      │  你想尝试哪个方向？                                │
-      │  ☐ 1. 现代极简 — 干净几何，负空间                   │
-      │  ☐ 2. 复古徽章 — 怀旧质感，手工艺风                 │
-      │  ☐ 3. 手绘风 — 有机线条，匠人温度                   │
-      │  ☐ 4. 以上全部                                    │
-      └──────────────────────────────────────────────────┘
+**过程** — AI 自动上传参考图、规划 4 个创意方向、撰写专业提示词：
 
-你:   [选择 1 和 3]
+<p align="center">
+  <img src="assets/demo-process-zh.jpg" alt="并行生成过程" width="700">
+</p>
 
-AI:   正在并行生成 2 张图片...
-      ✓ 方向 1: 现代极简
-        图片 URL: https://images.meigen.art/xxx1.png
-        已保存到: ~/Pictures/meigen/2026-02-08_dawn-brew-minimal.png
-      ✓ 方向 3: 手绘风
-        图片 URL: https://images.meigen.art/xxx2.png
-        已保存到: ~/Pictures/meigen/2026-02-08_dawn-brew-handdrawn.png
+**结果** — 不到 2 分钟，4 个方向全部完成：
 
-你:   方向 1 不错，帮我做个马克杯和 T 恤的效果图
+<p align="center">
+  <img src="assets/demo-result-zh.jpg" alt="生成结果" width="700">
+</p>
 
-AI:   以方向 1 为参考图，正在并行生成 2 个效果图...
-      ✓ 马克杯效果图: ~/Pictures/meigen/2026-02-08_dawn-brew-mug.png
-      ✓ T 恤效果图: ~/Pictures/meigen/2026-02-08_dawn-brew-tshirt.png
-```
+**生成的图片：**
 
-### 产品图拍摄 — 简短描述变专业图片
-
-```
-你:   拍一张香水瓶的产品图
-
-AI:   描述比较简短，正在补充专业细节...
-      已添加：影棚轮廓光、白色大理石台面、柔和散景背景、
-      35mm f/2.8 镜头、暖琥珀色调、时尚编辑构图
-
-      ✓ 图片 URL: https://images.meigen.art/xxx3.png
-        已保存到: ~/Pictures/meigen/2026-02-08_perfume.png
-        (已自动在预览中打开)
-```
-
-### 灵感搜索 → 风格参考生图
-
-```
-你:   /meigen:find 赛博朋克
-
-AI:   找到 6 条结果：
-      1. 霓虹灯街景 — 1.2 万浏览
-      2. 带面罩的赛博人物 — 8 千浏览
-      3. 未来城市夜景 — 1.5 万浏览
-      ...
-
-你:   第 3 个很酷，生一张类似的但加个武士
-
-AI:   以 #3 为风格参考...
-      ✓ 图片 URL: https://images.meigen.art/xxx4.png
-        已保存到: ~/Pictures/meigen/2026-02-08_cyberpunk-samurai.png
-```
+<p align="center">
+  <img src="assets/sample-luxury.jpg" alt="奢华静物" width="24%">
+  <img src="assets/sample-model.jpg" alt="优雅模特" width="24%">
+  <img src="assets/sample-botanicals.jpg" alt="梦幻花境" width="24%">
+  <img src="assets/sample-minimal.jpg" alt="极简光影" width="24%">
+</p>
 
 ---
 

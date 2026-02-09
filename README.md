@@ -58,68 +58,30 @@ MeiGen-Art is an open-source **MCP Server** (plugin) that bridges your AI assist
   <sub>▶ Watch demo on YouTube</sub>
 </p>
 
-### Logo Design — Multiple Directions + Iteration
+### Product Photo — 4 Directions in Parallel
 
-```
-You:  Design a logo for my coffee brand "Dawn Brew"
+> *"Create 4 product display images for this perfume, one of which should feature a model."*
 
-AI:   Here are 4 creative directions:
-      ┌─────────────────────────────────────────────────────┐
-      │  Which direction(s) do you want to try?             │
-      │  ☐ 1. Modern Minimal — clean geometry, negative     │
-      │  ☐ 2. Vintage Badge — retro emblem, craft feel      │
-      │  ☐ 3. Hand-drawn — organic lines, artisan warmth    │
-      │  ☐ 4. All of the above                              │
-      └─────────────────────────────────────────────────────┘
+**Process** — AI uploads the reference image, crafts 4 distinct prompts, then generates all 4 in parallel:
 
-You:  [selects 1 and 3]
+<p align="center">
+  <img src="assets/demo-process.jpg" alt="Parallel generation process" width="700">
+</p>
 
-AI:   Generating 2 images in parallel...
-      ✓ Direction 1: Modern Minimal
-        Image URL: https://images.meigen.art/xxx1.png
-        Saved to: ~/Pictures/meigen/2026-02-08_dawn-brew-minimal.png
-      ✓ Direction 3: Hand-drawn
-        Image URL: https://images.meigen.art/xxx2.png
-        Saved to: ~/Pictures/meigen/2026-02-08_dawn-brew-handdrawn.png
+**Result** — 4 creative directions delivered in under 2 minutes:
 
-You:  I like Direction 1. Put it on a mug and a t-shirt.
+<p align="center">
+  <img src="assets/demo-result.jpg" alt="Generation results" width="700">
+</p>
 
-AI:   Using Direction 1 as reference, generating 2 mockups in parallel...
-      ✓ Mug mockup saved to: ~/Pictures/meigen/2026-02-08_dawn-brew-mug.png
-      ✓ T-shirt mockup saved to: ~/Pictures/meigen/2026-02-08_dawn-brew-tshirt.png
-```
+**Generated images:**
 
-### Product Photo — Brief Description to Pro Image
-
-```
-You:  Product photo for a perfume bottle
-
-AI:   Your description is brief — enhancing with professional details...
-      Added: studio rim lighting, white marble surface, soft bokeh background,
-      35mm lens at f/2.8, warm amber tones, editorial composition
-
-      ✓ Image URL: https://images.meigen.art/xxx3.png
-        Saved to: ~/Pictures/meigen/2026-02-08_perfume.png
-        (auto-opened in Preview)
-```
-
-### Inspiration Search to Reference Generation
-
-```
-You:  /meigen:find cyberpunk
-
-AI:   Found 6 results:
-      1. Neon-lit street scene — 12k views
-      2. Cyberpunk portrait with visor — 8k views
-      3. Futuristic cityscape at night — 15k views
-      ...
-
-You:  #3 looks cool, generate something similar but with a samurai
-
-AI:   Using #3 as style reference...
-      ✓ Image URL: https://images.meigen.art/xxx4.png
-        Saved to: ~/Pictures/meigen/2026-02-08_cyberpunk-samurai.png
-```
+<p align="center">
+  <img src="assets/sample-luxury.jpg" alt="Luxury still life" width="24%">
+  <img src="assets/sample-model.jpg" alt="Model campaign" width="24%">
+  <img src="assets/sample-botanicals.jpg" alt="Nature botanicals" width="24%">
+  <img src="assets/sample-minimal.jpg" alt="Minimalist editorial" width="24%">
+</p>
 
 ---
 
