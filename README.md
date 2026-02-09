@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  <strong>Turn Claude Code / OpenClaw into your local Lovart.<br>Local ComfyUI, 1,300+ prompt library, multi-direction parallel generation.</strong>
+  <strong>Turn Claude Code / OpenClaw into your personal design assistant rivaling Lovart.<br>Local ComfyUI generation, API integration, 1,300+ pro prompt library, multi-direction parallel output.</strong>
 </p>
 
 <p align="center">
@@ -52,10 +52,10 @@ MeiGen-Art is an open-source **MCP Server** (plugin) that bridges your AI assist
 
 <p align="center">
   <a href="https://youtu.be/JQ3DZ1DXqvs">
-    <img src="https://img.youtube.com/vi/JQ3DZ1DXqvs/maxresdefault.jpg" alt="Watch Demo" width="600">
+    <img src="https://img.youtube.com/vi/JQ3DZ1DXqvs/maxresdefault.jpg" alt="Watch Demo" width="400">
   </a>
   <br>
-  <sub>▶ Watch demo on YouTube</sub>
+  <b><a href="https://youtu.be/JQ3DZ1DXqvs">▶ Watch demo on YouTube</a></b>
 </p>
 
 ### Product Photo — 4 Directions in Parallel

@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  <strong>让你的 Claude Code / OpenClaw 变成本地版 Lovart。<br>本地 ComfyUI、1,300+ 提示词库、多方案并行生成。</strong>
+  <strong>让 Claude Code / OpenClaw 变成媲美 Lovart 的私人设计助理。<br>支持本地 ComfyUI 生图和接入 API，1,300+ 专业提示词库，多方案并行。</strong>
 </p>
 
 <p align="center">
@@ -52,10 +52,10 @@ MeiGen-Art 是一个开源的 **MCP Server**（插件），连接你的 AI 助�
 
 <p align="center">
   <a href="https://youtu.be/JQ3DZ1DXqvs">
-    <img src="https://img.youtube.com/vi/JQ3DZ1DXqvs/maxresdefault.jpg" alt="观看演示" width="600">
+    <img src="https://img.youtube.com/vi/JQ3DZ1DXqvs/maxresdefault.jpg" alt="观看演示" width="400">
   </a>
   <br>
-  <sub>▶ 在 YouTube 观看演示</sub>
+  <b><a href="https://youtu.be/JQ3DZ1DXqvs">▶ 在 YouTube 观看演示</a></b>
 </p>
 
 ### 产品图 — 4 个方向并行生成
